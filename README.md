@@ -1,1 +1,1 @@
-# FIND PARKINK LOT! 🅿️
+# FIND PARKING LOT! 🅿️
