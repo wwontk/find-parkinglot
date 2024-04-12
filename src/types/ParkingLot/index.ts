@@ -24,4 +24,9 @@ export interface parkingLotListItemProps {
   prkplceNo: string;
   prkplceNm: string;
   prkplceRoadNmAddr: string;
+  prkplceLatPos: string;
+  prkplceLotPos: string;
+  prkplceOperInfo: string;
+  prkplceChargeInfo: string;
+  prkplceCnt: string;
 }

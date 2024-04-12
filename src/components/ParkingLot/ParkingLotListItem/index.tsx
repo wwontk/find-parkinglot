@@ -4,7 +4,7 @@ import { parkingLotListItemProps } from "../../../types/ParkingLot";
 const ParkingLotListItem = (props: parkingLotListItemProps) => {
   return (
     <>
-      <Link to={`/parkinglot/${props.prkplceNo}`}>
+      <Link to={`/parkinglot/${props.prkplceNo}`} state={{ data: props }}>
         <div className="bg-white p-5 rounded-2xl shadow mb-4">
           <p className="font-bold">{props.prkplceNm}</p>
           <p className="text-sm">{props.prkplceRoadNmAddr}</p>
