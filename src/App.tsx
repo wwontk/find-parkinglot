@@ -6,6 +6,7 @@ import MarketPage from "./pages/MarketPage";
 import ParkingLotDetailPage from "./pages/ParkingLotDetailPage";
 import MyPage from "./pages/MyPage";
 import SearchPage from "./pages/SearchPage";
+import SearchResultPage from "./pages/SearchPage/SearchResultPage";
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
             element={<ParkingLotDetailPage />}
           />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/search" element={<SearchPage />}>
+            <Route path="list" element={<SearchResultPage />} />
+          </Route>
         </Routes>
       </InnerCon>
     </>
