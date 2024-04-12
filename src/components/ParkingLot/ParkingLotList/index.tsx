@@ -20,6 +20,11 @@ const ParkingLotList = () => {
                 : item.prkplceRoadNmAddr
             }
             prkplceNo={item.prkplceNo}
+            prkplceLatPos={item.prkplceLatPos}
+            prkplceLotPos={item.prkplceLotPos}
+            prkplceOperInfo={item.prkplceOperInfo}
+            prkplceChargeInfo={item.prkplceChargeInfo}
+            prkplceCnt={item.prkplceCnt}
           />
         ))
       )}
