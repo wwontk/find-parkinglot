@@ -28,9 +28,12 @@ const useGetParkingLotQuery = (mktNm: string | undefined) => {
     queryKey: ["parkingLotList", mktNm],
     initialPageParam: 1,
     queryFn: ({ pageParam = 1 }) => fetchAPI({ mktNm, page: pageParam }),
-    getNextPageParam: (lastPage, allPage) => {
-      const nextpage = allPage.length;
-      return lastPage.length === 0 ? null : nextpage;
+    getNextPageParam: (lastPage) => {
+      return lastPage?.response.body.numOfRows *
+        lastPage?.response.body.pageNo <
+        lastPage?.response.body.totalCount
+        ? parseInt(lastPage.response.body.pageNo) + 1
+        : null;
     },
   });
 

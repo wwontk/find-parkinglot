@@ -6,7 +6,7 @@ const fetchAPI = async (page: number) => {
     params: {
       serviceKey: import.meta.env.VITE_DECODING_SERVICE_KEY,
       pageNo: page,
-      numOfRows: 10,
+      numOfRows: 20,
       type: "json",
     },
   });
@@ -23,9 +23,12 @@ const useGetMarketListQuery = () => {
     queryKey: ["marketList"],
     initialPageParam: 1,
     queryFn: ({ pageParam = 1 }) => fetchAPI(pageParam),
-    getNextPageParam: (lastPage, allPage) => {
-      const nextpage = allPage.length;
-      return lastPage.length === 0 ? null : nextpage;
+    getNextPageParam: (lastPage) => {
+      return lastPage?.response.body.numOfRows *
+        lastPage?.response.body.pageNo <
+        lastPage?.response.body.totalCount
+        ? parseInt(lastPage.response.body.pageNo) + 1
+        : null;
     },
   });
   return {
