@@ -11,6 +11,7 @@ import DivisionCityPage from "./pages/HomePage/DivisionCityPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import { RecoilRoot } from "recoil";
+import EditProfilePage from "./pages/MyPage/EditProfilePage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               element={<ParkingLotDetailPage />}
             />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/editprofile" element={<EditProfilePage />} />
             <Route path="/search" element={<SearchPage />}>
               <Route path="list" element={<SearchResultPage />} />
             </Route>

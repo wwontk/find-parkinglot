@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "../../components/common/Nav";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -20,6 +20,18 @@ const MyPage = () => {
     }
   }, [navigate]);
 
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     updateUser({
+  //       ...userState,
+  //       uid: user.uid,
+  //       email: user.email,
+  //       nickname: user.displayName,
+  //       profileImg: user.photoURL,
+  //     });
+  //   }
+  // });
+
   const handleLogoutButton = async () => {
     try {
       await signOut(auth).then(() => {
@@ -40,7 +52,11 @@ const MyPage = () => {
       <div className="flex flex-col items-center">
         {userState.profileImg ? (
           <>
-            <img src={userState.profileImg} alt="프로필이미지" />
+            <img
+              className="w-32 h-32 rounded-full object-cover"
+              src={userState.profileImg}
+              alt="프로필이미지"
+            />
           </>
         ) : (
           <div className="w-32 h-32 rounded-full bg-slate-200 flex items-center justify-center">
@@ -51,15 +67,17 @@ const MyPage = () => {
           {userState.nickname}
         </p>
         <div>
-          <div className="w-72 h-16 m-auto bg-slate-100 flex items-center rounded-2xl p-2 mb-4">
-            <div className="w-12 h-12 bg-zinc-200 rounded-2xl flex items-center justify-center">
-              <IoPerson size={25} />
+          <Link to={"/editprofile"}>
+            <div className="w-72 h-16 m-auto bg-slate-100 flex items-center rounded-2xl p-2 mb-4">
+              <div className="w-12 h-12 bg-zinc-200 rounded-2xl flex items-center justify-center">
+                <IoPerson size={25} />
+              </div>
+              <p className="ml-4 flex-1">유저 프로필 수정</p>
+              <div className="mr-2">
+                <FaArrowRight />
+              </div>
             </div>
-            <p className="ml-4 flex-1">유저 프로필 변경</p>
-            <div className="mr-2">
-              <FaArrowRight />
-            </div>
-          </div>
+          </Link>
           <div className="w-72 h-16 m-auto bg-slate-100 flex items-center rounded-2xl p-2">
             <div className="w-12 h-12 bg-zinc-200 rounded-2xl flex items-center justify-center">
               <MdOutlineRateReview size={25} />
