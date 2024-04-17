@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Nav from "../../components/common/Nav";
 import TopTitle from "../../components/common/TopTitle";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -10,16 +10,16 @@ declare global {
 }
 
 const ParkingLotDetailPage = () => {
+  const { prkplceNm } = useParams();
   const location = useLocation();
   const {
     prkplceCnt,
     prkplceLatPos,
     prkplceLotPos,
-    prkplceNm,
     prkplceOperInfo,
     prkplceRoadNmAddr,
-    // prkplceChargeInfo,
-    // prkplceNo,
+    prkplceChargeInfo,
+    prkplceNo,
   } = location.state.data;
 
   useEffect(() => {
@@ -50,8 +50,15 @@ const ParkingLotDetailPage = () => {
   return (
     <>
       <TopTitle text={`${prkplceNm}`} bg="bg-theme-color" />
-      <div className="mt-24">
+      <div className="mt-24 mb-28">
         <div id="map" className="w-full h-40 rounded-b-2xl"></div>
+        <div className="my-3 text-center">
+          <Link to={`/${prkplceNo}/${prkplceNm}/review`}>
+            <button className="bg-theme-color text-white p-3 rounded-xl ">
+              주차장 리뷰 보러가기 🚘
+            </button>
+          </Link>
+        </div>
         <div className="mx-4 mt-4">
           <div>
             <div className="font-semibold text-2xl">주소</div>
@@ -66,6 +73,16 @@ const ParkingLotDetailPage = () => {
             <div className="font-medium text-sm">
               <div>
                 {prkplceOperInfo.split("\n").map((item: string) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="font-semibold text-2xl">요금정보</div>
+            <div className="font-medium text-sm">
+              <div>
+                {prkplceChargeInfo.split("\n").map((item: string) => (
                   <p key={item}>{item}</p>
                 ))}
               </div>
