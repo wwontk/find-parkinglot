@@ -6,4 +6,6 @@ export interface ReviewDataProps {
   score: string;
   text: string;
   useruid: string;
+  myreview: boolean;
+  reviewId: string;
 }

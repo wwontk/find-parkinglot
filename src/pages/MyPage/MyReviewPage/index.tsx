@@ -13,7 +13,9 @@ import ReviewListItem from "../../../components/ReviewListItem";
 
 const MyReviewPage = () => {
   const { userState } = useUserState();
-  const [myReview, setMyReview] = useState<DocumentData[]>([]);
+  const [myReview, setMyReview] = useState<
+    { id: string; data: DocumentData }[]
+  >([]);
 
   useEffect(() => {
     const q = query(
@@ -21,7 +23,10 @@ const MyReviewPage = () => {
       where("useruid", "==", userState.uid)
     );
     onSnapshot(q, (querySnapshot) => {
-      const newArray = querySnapshot.docs.map((doc) => doc.data());
+      const newArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        data: doc.data(),
+      }));
       setMyReview(newArray);
     });
   }, [userState.uid]);
@@ -35,13 +40,15 @@ const MyReviewPage = () => {
             myReview.map((item, index) => (
               <ReviewListItem
                 key={index}
-                nickname={item.nickname}
-                prkplceNo={item.prkplceNo}
-                prkplceNm={item.prkplceNm}
-                profileImg={item.profileImg}
-                score={item.score}
-                text={item.text}
-                useruid={item.useruid}
+                nickname={item.data.nickname}
+                prkplceNo={item.data.prkplceNo}
+                prkplceNm={item.data.prkplceNm}
+                profileImg={item.data.profileImg}
+                score={item.data.score}
+                text={item.data.text}
+                useruid={item.data.useruid}
+                myreview={true}
+                reviewId={item.id}
               />
             ))
           ) : (

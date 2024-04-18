@@ -16,7 +16,9 @@ const ParkingLotReviewPage = () => {
 
   const { prkplceNo, prkplceNm } = useParams();
 
-  const [review, setReview] = useState<DocumentData[]>([]);
+  const [review, setReview] = useState<{ id: string; data: DocumentData }[]>(
+    []
+  );
 
   useEffect(() => {
     const q = query(
@@ -24,7 +26,10 @@ const ParkingLotReviewPage = () => {
       where("prkplceNo", "==", prkplceNo)
     );
     onSnapshot(q, (querySnapshot) => {
-      const newArray = querySnapshot.docs.map((doc) => doc.data());
+      const newArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        data: doc.data(),
+      }));
       setReview(newArray);
     });
   }, [prkplceNo]);
@@ -45,13 +50,15 @@ const ParkingLotReviewPage = () => {
           review.map((item, index) => (
             <ReviewListItem
               key={index}
-              nickname={item.nickname}
-              prkplceNo={item.prkplceNo}
-              prkplceNm={item.prkplceNm}
-              profileImg={item.profileImg}
-              score={item.score}
-              text={item.text}
-              useruid={item.useruid}
+              nickname={item.data.nickname}
+              prkplceNo={item.data.prkplceNo}
+              prkplceNm={item.data.prkplceNm}
+              profileImg={item.data.profileImg}
+              score={item.data.score}
+              text={item.data.text}
+              useruid={item.data.useruid}
+              myreview={false}
+              reviewId={item.id}
             />
           ))
         ) : (
