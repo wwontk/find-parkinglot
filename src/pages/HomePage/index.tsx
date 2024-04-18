@@ -14,11 +14,18 @@ const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nickname, setNickname] = useState<string | null>("");
 
-  const { userState } = useUserState();
+  const { userState, updateUser } = useUserState();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        updateUser({
+          uid: user.uid,
+          email: user.email,
+          nickname: user.displayName,
+          profileImg: user.photoURL,
+          isLogin: true,
+        });
         setIsLoggedIn(true);
         setNickname(user.displayName);
       }

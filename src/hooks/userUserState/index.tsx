@@ -1,9 +1,10 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { userAtom } from "../../recoil/atoms/user/atom";
 import { UserDataType } from "../../types/User";
 
 const useUserState = () => {
   const [userState, setUserState] = useRecoilState(userAtom);
+  const resetUser = useResetRecoilState(userAtom);
 
   const updateUser = (userInfo: UserDataType) => {
     setUserState({
@@ -15,6 +16,7 @@ const useUserState = () => {
     userState,
     setUserState,
     updateUser,
+    resetUser,
   };
 };
 

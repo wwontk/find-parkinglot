@@ -10,7 +10,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { userState, updateUser } = useUserState();
+  const { userState, resetUser } = useUserState();
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -20,25 +20,10 @@ const MyPage = () => {
     }
   }, [navigate]);
 
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     updateUser({
-  //       ...userState,
-  //       uid: user.uid,
-  //       email: user.email,
-  //       nickname: user.displayName,
-  //       profileImg: user.photoURL,
-  //     });
-  //   }
-  // });
-
   const handleLogoutButton = async () => {
     try {
       await signOut(auth).then(() => {
-        updateUser({
-          ...userState,
-          isLogin: false,
-        });
+        resetUser();
         alert("로그아웃 하였습니다.");
         navigate("/");
       });
@@ -78,15 +63,17 @@ const MyPage = () => {
               </div>
             </div>
           </Link>
-          <div className="w-72 h-16 m-auto bg-slate-100 flex items-center rounded-2xl p-2">
-            <div className="w-12 h-12 bg-zinc-200 rounded-2xl flex items-center justify-center">
-              <MdOutlineRateReview size={25} />
+          <Link to={"/myreview"}>
+            <div className="w-72 h-16 m-auto bg-slate-100 flex items-center rounded-2xl p-2">
+              <div className="w-12 h-12 bg-zinc-200 rounded-2xl flex items-center justify-center">
+                <MdOutlineRateReview size={25} />
+              </div>
+              <p className="ml-4 flex-1">내가 쓴 리뷰</p>
+              <div className="mr-2">
+                <FaArrowRight />
+              </div>
             </div>
-            <p className="ml-4 flex-1">내가 쓴 리뷰</p>
-            <div className="mr-2">
-              <FaArrowRight />
-            </div>
-          </div>
+          </Link>
         </div>
         <button
           className="mt-5 font-semibold text-zinc-300"
