@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import useUserState from "../../hooks/userUserState";
@@ -13,9 +13,22 @@ const LoginPage = () => {
   const [email, , handleChangeEmail] = useInput("");
   const [password, , handleChangePassword] = useInput("");
 
+  const [allCheck, setAllCheck] = useState(false);
+
+  const [loginError, setLoginError] = useState(false);
+
+  useEffect(() => {
+    if (email && password) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [email, password]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password).then(() => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       onAuthStateChanged(auth, (user) => {
         if (user) {
           updateUser({
@@ -28,7 +41,9 @@ const LoginPage = () => {
         }
       });
       navigate("/");
-    });
+    } catch (error) {
+      setLoginError(true);
+    }
   };
 
   return (
@@ -51,7 +66,15 @@ const LoginPage = () => {
           value={password}
           onChange={handleChangePassword}
         ></input>
-        <button className="bg-theme-color text-white w-72 p-2 rounded-2xl mt-10">
+        {loginError && (
+          <p className="text-red-600">
+            이메일 혹은 비밀번호가 올바르지 않습니다.
+          </p>
+        )}
+        <button
+          className="bg-theme-color text-white w-72 p-2 rounded-2xl mt-10 disabled:bg-slate-300"
+          disabled={!allCheck}
+        >
           login
         </button>
       </form>

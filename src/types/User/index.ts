@@ -5,3 +5,8 @@ export interface UserDataType {
   profileImg: string | null;
   isLogin: boolean;
 }
+
+export interface ValidCheckType {
+  status: boolean;
+  msg: string;
+}
