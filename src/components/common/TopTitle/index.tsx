@@ -14,8 +14,8 @@ const TopTitle = (props: TopTitleProps) => {
   return (
     <>
       <div
-        className={`flex items-center max-w-default w-full m-auto h-24 fixed top-0 left-0 right-0 ${
-          props.bg ? props.bg : ""
+        className={`flex items-center max-w-default w-full m-auto h-24 fixed top-0 left-0 right-0 z-10 ${
+          props.bg ? props.bg : "bg-white"
         }`}
       >
         <div
