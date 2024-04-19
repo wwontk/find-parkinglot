@@ -4,10 +4,18 @@ import useInput from "../../../hooks/useInput";
 import useUserState from "../../../hooks/userUserState";
 import { IoPerson } from "react-icons/io5";
 import { MdPhotoCamera } from "react-icons/md";
-import { auth, storage } from "../../../firebase";
+import { auth, db, storage } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -18,7 +26,20 @@ const EditProfilePage = () => {
     userState.profileImg
   );
 
-  const handleEditProfile = () => {
+  const [myReview, setMyReview] = useState<string[]>([]);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "Reviews"),
+      where("useruid", "==", userState.uid)
+    );
+    onSnapshot(q, (querySnapshot) => {
+      const newArray = querySnapshot.docs.map((doc) => doc.id);
+      setMyReview(newArray);
+    });
+  }, [userState.uid]);
+
+  const handleEditProfile = async () => {
     updateProfile(auth.currentUser, {
       displayName: nickname,
       photoURL: profileUrl,
@@ -28,6 +49,13 @@ const EditProfilePage = () => {
       nickname: nickname,
       profileImg: profileUrl,
     });
+    for (let i = 0; i < myReview.length; i++) {
+      const ref = doc(db, "Reviews", myReview[i]);
+      await updateDoc(ref, {
+        nickname: nickname,
+        profileImg: profileUrl,
+      });
+    }
     alert("프로필 수정이 완료되었습니다.");
     navigate("/mypage");
   };

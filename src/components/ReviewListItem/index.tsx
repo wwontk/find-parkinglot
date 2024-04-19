@@ -12,8 +12,8 @@ const ReviewListItem = (props: ReviewDataProps) => {
     const confirm = window.confirm("리뷰를 삭제하시겠습니까?");
     if (confirm) {
       await deleteDoc(doc(db, "Reviews", props.reviewId));
+      alert("삭제되었습니다.");
     }
-    alert("삭제되었습니다.");
   };
 
   return (
@@ -27,12 +27,19 @@ const ReviewListItem = (props: ReviewDataProps) => {
           />
           <p className="text-sm flex-1">{props.nickname}</p>
           {props.useruid === userState.uid && (
-            <button
-              className="text-sm bg-theme-color text-white p-1 rounded"
-              onClick={handleDeleteReview}
-            >
-              삭제
-            </button>
+            <>
+              <Link to={`/${props.reviewId}/update`}>
+                <button className="text-sm bg-theme-color text-white p-1 rounded">
+                  수정
+                </button>
+              </Link>
+              <button
+                className="text-sm bg-theme-color text-white p-1 rounded"
+                onClick={handleDeleteReview}
+              >
+                삭제
+              </button>
+            </>
           )}
         </div>
         <div>
