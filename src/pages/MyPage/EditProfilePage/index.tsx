@@ -40,6 +40,7 @@ const EditProfilePage = () => {
   }, [userState.uid]);
 
   const handleEditProfile = async () => {
+    if (!auth.currentUser) return;
     updateProfile(auth.currentUser, {
       displayName: nickname,
       photoURL: profileUrl,
