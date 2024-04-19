@@ -43,7 +43,7 @@ const EditProfilePage = () => {
     if (!auth.currentUser) return;
     updateProfile(auth.currentUser, {
       displayName: nickname,
-      photoURL: profileUrl,
+      photoURL: String(profileUrl),
     });
     updateUser({
       ...userState,
