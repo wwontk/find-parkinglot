@@ -15,6 +15,7 @@ import EditProfilePage from "./pages/MyPage/EditProfilePage";
 import MyReviewPage from "./pages/MyPage/MyReviewPage";
 import ParkingLotReviewPage from "./pages/ParkingLotReviewPage";
 import PostReviewPage from "./pages/ParkingLotReviewPage/PostReviewPage";
+import ReviewUpdatePage from "./pages/ReviewUpdatePage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/editprofile" element={<EditProfilePage />} />
             <Route path="/myreview" element={<MyReviewPage />} />
+            <Route path="/:reviewid/update" element={<ReviewUpdatePage />} />
             <Route path="/search" element={<SearchPage />}>
               <Route path="list" element={<SearchResultPage />} />
             </Route>
