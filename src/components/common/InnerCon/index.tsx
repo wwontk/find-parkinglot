@@ -5,7 +5,7 @@ interface InnerConProps {
 }
 
 const InnerCon = ({ children }: InnerConProps) => (
-  <section className="w-96 m-auto">{children}</section>
+  <section className="w-96 m-auto px-2">{children}</section>
 );
 
 export default InnerCon;

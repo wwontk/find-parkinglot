@@ -17,8 +17,7 @@ const PostReviewPage = () => {
 
   useEffect(() => {
     if (!userState.isLogin) {
-      alert("로그인을 진행해주세요!");
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, [navigate, userState.isLogin]);
 

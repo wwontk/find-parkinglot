@@ -15,8 +15,7 @@ const MyPage = () => {
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) {
-      alert("로그인을 진행해주세요!");
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, [navigate]);
 
