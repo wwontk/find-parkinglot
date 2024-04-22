@@ -7,7 +7,8 @@ const fetchAPI = async (props: getParkingLotProps) => {
     "https://proxy.cors.sh/http://api.kcisa.kr/openapi/API_CNV_064/request",
     {
       headers: {
-        "x-cors-api-key": import.meta.env.VITE_PROXY_TEST_KEY,
+        "x-cors-api-key":
+          "test_1d87da0b22d562cbb292b241a2427dcc30dc0a6de63a44ba8350893ea0a32b79",
       },
       params: {
         serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
