@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 const fetchAPI = async (props: getParkingLotProps) => {
   const res = await axios.get(
-    "https://api.kcisa.kr/openapi/API_CNV_064/request",
+    "http://api.kcisa.kr/openapi/API_CNV_064/request",
     {
       params: {
         serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
