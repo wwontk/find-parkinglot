@@ -4,6 +4,7 @@ export const axiosDefault = axios.create({
   baseURL: "https://proxy.cors.sh/http://api.data.go.kr",
   headers: {
     "Content-Type": "application/json",
-    "x-cors-api-key": import.meta.env.VITE_PROXY_TEST_KEY,
+    "x-cors-api-key":
+      "live_7e11ac0c11f6b0a7d4f3d11ded385c4fdf4382b926264954727f1200ab482cc8",
   },
 });

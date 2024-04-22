@@ -8,7 +8,7 @@ const fetchAPI = async (props: getParkingLotProps) => {
     {
       headers: {
         "x-cors-api-key":
-          "test_1d87da0b22d562cbb292b241a2427dcc30dc0a6de63a44ba8350893ea0a32b79",
+          "live_7e11ac0c11f6b0a7d4f3d11ded385c4fdf4382b926264954727f1200ab482cc8",
       },
       params: {
         serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
