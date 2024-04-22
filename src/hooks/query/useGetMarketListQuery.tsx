@@ -2,17 +2,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosDefault } from "../../apis";
 
 const fetchAPI = async (page: number) => {
-  const res = await axiosDefault.get(
-    "http://api.data.go.kr/openapi/tn_pubr_public_trdit_mrkt_api",
-    {
-      params: {
-        serviceKey: import.meta.env.VITE_DECODING_SERVICE_KEY,
-        pageNo: page,
-        numOfRows: 20,
-        type: "json",
-      },
-    }
-  );
+  const res = await axiosDefault.get("/openapi/tn_pubr_public_trdit_mrkt_api", {
+    params: {
+      serviceKey: import.meta.env.VITE_DECODING_SERVICE_KEY,
+      pageNo: page,
+      numOfRows: 20,
+      type: "json",
+    },
+  });
 
   return res.data;
 };
