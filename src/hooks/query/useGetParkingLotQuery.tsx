@@ -4,7 +4,7 @@ import axios from "axios";
 
 const fetchAPI = async (props: getParkingLotProps) => {
   const res = await axios.get(
-    "https://cors-anywhere/herokuapp.com/http://api.kcisa.kr/openapi/API_CNV_064/request",
+    "https://cors-anywhere.herokuapp.com/http://api.kcisa.kr/openapi/API_CNV_064/request",
     {
       params: {
         serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
