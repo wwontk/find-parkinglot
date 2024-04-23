@@ -16,12 +16,14 @@ const fetchAPI = async (mrktNm: string | null) => {
 };
 
 const useGetMarketSearchQuery = (mrktNm: string | null) => {
-  const { data: marketSearchData } = useQuery({
-    queryKey: ["marketSearchData", mrktNm],
-    queryFn: () => fetchAPI(mrktNm),
-  });
+  const { data: marketSearchData, isFetching: marketSearchIsFetching } =
+    useQuery({
+      queryKey: ["marketSearchData", mrktNm],
+      queryFn: () => fetchAPI(mrktNm),
+    });
   return {
     marketSearchData,
+    marketSearchIsFetching,
   };
 };
 

@@ -3,17 +3,29 @@ import useGetMarketListQuery from "../../../hooks/query/useGetMarketListQuery";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 import { marketListDataType } from "../../../types/MarketList";
 import MarketListItem from "../MarketListItem";
+import Skeleton from "../../common/Skeleton";
 
 const MarketList = () => {
   let { city } = useParams();
   if (city === undefined) city = "전국";
-  const { marketListData, marketListFetchNextPage, marketListHasNextPage } =
-    useGetMarketListQuery();
+  const {
+    marketListData,
+    marketListFetchNextPage,
+    marketListHasNextPage,
+    marketListIsFetching,
+  } = useGetMarketListQuery();
 
   const { bottomDiv } = useInfiniteScroll(
     marketListFetchNextPage,
     marketListHasNextPage
   );
+
+  if (marketListIsFetching)
+    return (
+      <>
+        <Skeleton cnt={10} />
+      </>
+    );
 
   return (
     <>

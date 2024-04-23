@@ -24,6 +24,7 @@ const useGetParkingLotQuery = (mktNm: string | undefined) => {
     data: parkingLotData,
     fetchNextPage: parkingLotFecthNextPage,
     hasNextPage: parkingLotHasNextPage,
+    isFetching: parkingLotIsFetching,
   } = useInfiniteQuery({
     queryKey: ["parkingLotList", mktNm],
     initialPageParam: 1,
@@ -41,6 +42,7 @@ const useGetParkingLotQuery = (mktNm: string | undefined) => {
     parkingLotData,
     parkingLotFecthNextPage,
     parkingLotHasNextPage,
+    parkingLotIsFetching,
   };
 };
 

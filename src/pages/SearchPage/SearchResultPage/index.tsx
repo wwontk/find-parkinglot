@@ -3,13 +3,22 @@ import useGetMarketSearchQuery from "../../../hooks/query/useGetMarketSearchQuer
 import { marketListItemProps } from "../../../types/MarketList";
 import MarketListItem from "../../../components/Market/MarketListItem";
 import { RiErrorWarningFill } from "react-icons/ri";
+import Skeleton from "../../../components/common/Skeleton";
 
 const SearchResultPage = () => {
   const [searchParams] = useSearchParams();
   const object = searchParams.get("object");
-  const { marketSearchData } = useGetMarketSearchQuery(object);
+  const { marketSearchData, marketSearchIsFetching } =
+    useGetMarketSearchQuery(object);
 
-  // console.log(marketSearchData);
+  if (marketSearchIsFetching)
+    return (
+      <>
+        <div className="mt-4">
+          <Skeleton cnt={3} />
+        </div>
+      </>
+    );
   return (
     <>
       <div className="mt-4">

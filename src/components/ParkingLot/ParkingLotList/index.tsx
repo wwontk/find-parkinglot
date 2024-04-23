@@ -4,16 +4,28 @@ import { parkingLotDataType } from "../../../types/ParkingLot";
 import ParkingLotListItem from "../ParkingLotListItem";
 import { RiErrorWarningFill } from "react-icons/ri";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
+import Skeleton from "../../common/Skeleton";
 
 const ParkingLotList = () => {
   const { marketname } = useParams();
-  const { parkingLotData, parkingLotFecthNextPage, parkingLotHasNextPage } =
-    useGetParkingLotQuery(marketname);
+  const {
+    parkingLotData,
+    parkingLotFecthNextPage,
+    parkingLotHasNextPage,
+    parkingLotIsFetching,
+  } = useGetParkingLotQuery(marketname);
 
   const { bottomDiv } = useInfiniteScroll(
     parkingLotFecthNextPage,
     parkingLotHasNextPage
   );
+
+  if (parkingLotIsFetching)
+    return (
+      <>
+        <Skeleton cnt={10} />
+      </>
+    );
 
   return (
     <>

@@ -19,6 +19,7 @@ const useGetMarketListQuery = () => {
     data: marketListData,
     fetchNextPage: marketListFetchNextPage,
     hasNextPage: marketListHasNextPage,
+    isFetching: marketListIsFetching,
   } = useInfiniteQuery({
     queryKey: ["marketList"],
     initialPageParam: 1,
@@ -35,6 +36,7 @@ const useGetMarketListQuery = () => {
     marketListData,
     marketListFetchNextPage,
     marketListHasNextPage,
+    marketListIsFetching,
   };
 };
 
