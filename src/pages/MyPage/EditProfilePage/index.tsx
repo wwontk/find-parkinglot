@@ -16,6 +16,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import styled from "@emotion/styled";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -77,27 +78,20 @@ const EditProfilePage = () => {
   return (
     <>
       <TopTitle text="프로필 수정" />
-      <div className="flex flex-col items-center mt-40 gap-4">
+      <Container>
         <div className="relative">
           {profileUrl ? (
             <>
-              <img
-                className="w-32 h-32 rounded-full flex items-center justify-center object-cover"
-                src={`${profileUrl}`}
-                alt="프로필이미지"
-              />
+              <ProfileImg src={`${profileUrl}`} alt="프로필이미지" />
             </>
           ) : (
-            <div className="w-32 h-32 rounded-full bg-slate-200 flex items-center justify-center">
+            <ProfileBasic>
               <IoPerson size={70} color="white" />
-            </div>
+            </ProfileBasic>
           )}
-          <label
-            htmlFor="editProfile"
-            className="w-6 h-6 bg-zinc-400 rounded-full flex justify-center items-center text-white text-sm absolute bottom-0 right-2 cursor-pointer"
-          >
+          <FileInputLabel htmlFor="editProfile">
             <MdPhotoCamera />
-          </label>
+          </FileInputLabel>
           <input
             type="file"
             accept="image/*"
@@ -109,22 +103,76 @@ const EditProfilePage = () => {
         </div>
         <div>
           <p className="font-semibold">Nickname</p>
-          <input
+          <NicknameInput
             type="text"
-            className="border w-72 p-2 rounded-2xl"
             value={nickname}
             onChange={handleNicknameChange}
           />
         </div>
-        <button
-          className="w-72 bg-theme-color text-white p-2 rounded-2xl"
-          onClick={handleEditProfile}
-        >
-          완료
-        </button>
-      </div>
+        <UpdateButton onClick={handleEditProfile}>완료</UpdateButton>
+      </Container>
     </>
   );
 };
 
 export default EditProfilePage;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10rem;
+  gap: 1rem;
+`;
+
+const ProfileImg = styled.img`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+`;
+
+const ProfileBasic = styled.div`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  background-color: rgb(226 232 240);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FileInputLabel = styled.label`
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: rgb(161 161 170);
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
+  cursor: pointer;
+`;
+
+const NicknameInput = styled.input`
+  border-width: 1px;
+  width: 18rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+`;
+
+const UpdateButton = styled.button`
+  width: 18rem;
+  background-color: rgb(24 37 61);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 1rem;
+`;

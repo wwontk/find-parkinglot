@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
-
 import { FormEvent, useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import useUserState from "../../hooks/userUserState";
+import styled from "@emotion/styled";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -48,44 +48,85 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="mt-14 mb-14 ml-12 font-extrabold text-2xl">
+      <TextWrapper>
         <p>WELCOME!</p>
-      </div>
-      <form className="flex-col w-72 m-auto" onSubmit={handleSubmit}>
-        <input
+      </TextWrapper>
+      <LoginForm onSubmit={handleSubmit}>
+        <LoginInput
           type="email"
-          className="border w-72 p-2 rounded-2xl mb-4"
           placeholder="email"
           value={email}
           onChange={handleChangeEmail}
-        ></input>
-        <input
+        ></LoginInput>
+        <LoginInput
           type="password"
-          className="border w-72 p-2 rounded-2xl mb-4"
           placeholder="password"
           value={password}
           onChange={handleChangePassword}
-        ></input>
+        ></LoginInput>
         {loginError && (
-          <p className="text-red-600">
-            이메일 혹은 비밀번호가 올바르지 않습니다.
-          </p>
+          <ErrMsg>이메일 혹은 비밀번호가 올바르지 않습니다.</ErrMsg>
         )}
-        <button
-          className="bg-theme-color text-white w-72 p-2 rounded-2xl mt-10 disabled:bg-slate-300"
-          disabled={!allCheck}
-        >
-          login
-        </button>
-      </form>
-      <div className="mt-2 text-sm text-center">
+        <SubmitButton disabled={!allCheck}>login</SubmitButton>
+      </LoginForm>
+      <SubTextWrapper>
         <span>아직 회원이 아니라면?</span>
         <Link to={"/signup"}>
-          <span className="ml-1 font-bold">회원가입</span>
+          <SignupText>회원가입</SignupText>
         </Link>
-      </div>
+      </SubTextWrapper>
     </>
   );
 };
 
 export default LoginPage;
+
+const TextWrapper = styled.div`
+  margin: 3.5rem 0;
+  margin-left: 3rem;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 2rem;
+`;
+
+const LoginForm = styled.form`
+  flex-direction: column;
+  width: 18rem;
+  margin: 0 auto;
+`;
+
+const LoginInput = styled.input`
+  width: 18rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  border-width: 1px;
+`;
+
+const ErrMsg = styled.p`
+  color: rgb(220 38 38);
+`;
+
+const SubmitButton = styled.button`
+  background-color: rgb(24 37 61);
+  color: white;
+  width: 18rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin-top: 2.5rem;
+  &:disabled {
+    background-color: rgb(203 213 225);
+  }
+`;
+
+const SubTextWrapper = styled.div`
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+`;
+
+const SignupText = styled.span`
+  margin-left: 0.25rem;
+  font-weight: 700;
+`;

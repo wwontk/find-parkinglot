@@ -1,13 +1,18 @@
 import MarketList from "../../../components/Market/MarketList";
+import styled from "@emotion/styled";
 
 const DivisionCityPage = () => {
   return (
     <>
-      <div className="mb-28">
+      <MarketListWrapper>
         <MarketList />
-      </div>
+      </MarketListWrapper>
     </>
   );
 };
 
 export default DivisionCityPage;
+
+const MarketListWrapper = styled.div`
+  margin-bottom: 7rem;
+`;

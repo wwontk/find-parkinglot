@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase";
 import useUserState from "../../../hooks/userUserState";
+import styled from "@emotion/styled";
 
 const PostReviewPage = () => {
   const { prkplceNo, prkplceNm } = useParams();
@@ -15,6 +16,8 @@ const PostReviewPage = () => {
   const [star, setStar] = useState("1");
   const [reviewText, , handleChangeReviewText] = useInput("");
 
+  const [check, setCheck] = useState(false);
+
   useEffect(() => {
     if (!userState.isLogin) {
       navigate("/login", { replace: true });
@@ -24,6 +27,14 @@ const PostReviewPage = () => {
   const handleChangeStar = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStar(e.target.value);
   };
+
+  useEffect(() => {
+    if (star && reviewText) {
+      setCheck(true);
+    } else {
+      setCheck(false);
+    }
+  }, [star, reviewText]);
 
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,17 +53,17 @@ const PostReviewPage = () => {
       { replace: true }
     );
   };
+
   return (
     <>
       <TopTitle text="리뷰 작성하기" />
-      <form className="mt-24" onSubmit={handleSumbit}>
-        <div className="flex flex-col gap-2">
-          <span className="font-semibold text-zinc-300">별점</span>
-          <select
+      <Form onSubmit={handleSumbit}>
+        <Container>
+          <DescText>별점</DescText>
+          <Select
             name="star"
             id="star"
             value={star}
-            className="border w-16 rounded-xl p-2"
             onChange={handleChangeStar}
           >
             <option value="1">1</option>
@@ -60,20 +71,53 @@ const PostReviewPage = () => {
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-          </select>
-          <span className="font-semibold text-zinc-300">리뷰</span>
-          <textarea
-            className="border p-3 h-40 rounded-xl"
-            value={reviewText}
-            onChange={handleChangeReviewText}
-          />
-          <button className="bg-theme-color text-white p-2 rounded-xl">
-            등록
-          </button>
-        </div>
-      </form>
+          </Select>
+          <DescText>리뷰</DescText>
+          <TextArea value={reviewText} onChange={handleChangeReviewText} />
+          <PostBtn disabled={!check}>등록</PostBtn>
+        </Container>
+      </Form>
     </>
   );
 };
 
 export default PostReviewPage;
+
+const Form = styled.form`
+  margin-top: 6rem;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const DescText = styled.span`
+  font-weight: 600;
+  color: rgb(212 212 216);
+`;
+
+const Select = styled.select`
+  border-width: 1px;
+  width: 4rem;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+`;
+
+const TextArea = styled.textarea`
+  border-width: 1px;
+  padding: 0.75rem;
+  height: 10rem;
+  border-radius: 0.75rem;
+`;
+
+const PostBtn = styled.button`
+  background-color: rgb(24 37 61);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  &:disabled {
+    background-color: rgb(203 213 225);
+  }
+`;

@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Nav from "../../components/common/Nav";
 import { useState } from "react";
+import styled from "@emotion/styled";
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="mt-2 rounded border flex p-2">
+      <Form onSubmit={handleSubmit}>
         <input
           type="text"
           className="flex-1"
@@ -39,7 +40,7 @@ const SearchPage = () => {
             />
           </svg>
         </button>
-      </form>
+      </Form>
 
       <Outlet />
       <Nav />
@@ -48,3 +49,11 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
+
+const Form = styled.form`
+  margin-top: 0.5rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  display: flex;
+  padding: 0.5rem;
+`;

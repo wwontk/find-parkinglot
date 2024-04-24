@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
 import { ValidCheckType } from "../../types/User";
+import styled from "@emotion/styled";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -107,19 +108,18 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="mt-14 mb-14 ml-12 font-extrabold text-2xl">
+      <TitleWrapper>
         <p>CREATE</p>
         <p>ACCOUNT!</p>
-      </div>
-      <form className="flex-col w-72 m-auto" onSubmit={handleSubmit}>
+      </TitleWrapper>
+      <Form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <input
+          <Input
             type="email"
-            className="border w-72 p-2 rounded-2xl"
             placeholder="email"
             value={email}
             onChange={handleChangeEmail}
-          ></input>
+          ></Input>
           <p
             className={`${
               validEmail.status ? "text-green-500" : "text-red-600"
@@ -129,13 +129,12 @@ const SignUpPage = () => {
           </p>
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="password"
-            className="border w-72 p-2 rounded-2xl"
             placeholder="password"
             value={password}
             onChange={handleChangePassword}
-          ></input>
+          ></Input>
           <p
             className={`${
               password
@@ -151,13 +150,12 @@ const SignUpPage = () => {
           </p>
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="password"
-            className="border w-72 p-2 rounded-2xl"
             placeholder="passwordCheck"
             value={passwordCheck}
             onChange={handleChangePasswordCheck}
-          ></input>
+          ></Input>
           <p
             className={`${
               validPasswordCheck.status ? "text-green-500" : "text-red-600"
@@ -167,21 +165,15 @@ const SignUpPage = () => {
           </p>
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="text"
-            className="border w-72 p-2 rounded-2xl"
             placeholder="nickname"
             value={nickname}
             onChange={handleChangeNickname}
-          ></input>
+          ></Input>
         </div>
-        <button
-          className="bg-theme-color text-white w-72 p-2 rounded-2xl mt-10 disabled:bg-slate-300"
-          disabled={!allCheck}
-        >
-          sign up
-        </button>
-      </form>
+        <SignupBtn disabled={!allCheck}>sign up</SignupBtn>
+      </Form>
       <div className="mt-2 text-sm text-center">
         <span>이미 회원이라면?</span>
         <Link to={"/login"}>
@@ -193,3 +185,35 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
+
+const TitleWrapper = styled.div`
+  margin: 3.5rem 0 3.5rem 3rem;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 2rem;
+`;
+
+const Form = styled.form`
+  flex-direction: column;
+  width: 18rem;
+  margin: 0 auto;
+`;
+
+const Input = styled.input`
+  border-width: 1px;
+  width: 18rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+`;
+
+const SignupBtn = styled.button`
+  background-color: rgb(24 37 61);
+  color: white;
+  width: 18rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin-top: 2.5rem;
+  &:disabled {
+    background-color: rgb(203 213 225);
+  }
+`;

@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 import useUserState from "../../hooks/userUserState";
 import { IoPerson } from "react-icons/io5";
+import styled from "@emotion/styled";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -38,18 +39,18 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-end h-14 fixed top-0 left-0 right-0 max-w-default m-auto bg-white">
+      <HomeTopBar className="max-w-default">
         {isLoggedIn ? (
           <>
             {userState.profileImg ? (
-              <img
-                className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover mr-4"
+              <ProfileImg
+                className="ring-2 ring-white"
                 src={`${userState.profileImg}`}
-              ></img>
+              ></ProfileImg>
             ) : (
-              <div className="h-8 w-8 rounded-full ring-2 ring-white bg-slate-200 mr-4 flex items-center justify-center">
+              <ProfileBasic className="ring-2 ring-white">
                 <IoPerson size={15} color="white" />
-              </div>
+              </ProfileBasic>
             )}
 
             <Link to={"/mypage"}>
@@ -57,31 +58,27 @@ const HomePage = () => {
             </Link>
           </>
         ) : (
-          <button
-            className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-            onClick={handleLoginBtnClick}
-          >
-            로그인
-          </button>
+          <LoginButton onClick={handleLoginBtnClick}>로그인</LoginButton>
         )}
-      </div>
-      <div className="mt-14 font-bold text-3xl">
-        <p className="font-medium text-sm">시장가자! 근처에 있는</p>
+      </HomeTopBar>
+      <TitleWrapper>
+        <TitleDesc className="font-medium text-sm">
+          시장가자! 근처에 있는
+        </TitleDesc>
         <p>주차장</p>
         <p>찾아줘🚘</p>
-      </div>
+      </TitleWrapper>
       <div>
-        <ul className="my-10 flex whitespace-nowrap overflow-auto">
+        <RegionUl>
           {regionList.map((item, index) => (
-            <button
+            <RegionButton
               key={index}
-              className="mr-4"
               onClick={() => {
                 item === "전국" ? navigate("/") : navigate(`/${item}`);
               }}
             >
-              <li
-                className={`px-5 py-2.5 rounded-full ${
+              <RegionItemLi
+                className={`${
                   city === item ? "bg-theme-color text-white" : "bg-slate-100"
                 } ${
                   item === "전국" && city === undefined
@@ -90,19 +87,109 @@ const HomePage = () => {
                 }`}
               >
                 {item}
-              </li>
-            </button>
+              </RegionItemLi>
+            </RegionButton>
           ))}
-        </ul>
+        </RegionUl>
       </div>
-      <div className="font-medium mb-7">Traditional Market 🥬</div>
-      <div className="mb-28">
+      <MarketTitle>Traditional Market 🥬</MarketTitle>
+      <MarketListWrapper>
         <MarketList />
-      </div>
-      {/* <Outlet /> */}
+      </MarketListWrapper>
       <Nav />
     </>
   );
 };
 
 export default HomePage;
+
+const HomeTopBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  height: 3.5rem;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0 auto;
+  background-color: white;
+  z-index: 20;
+`;
+
+const ProfileImg = styled.img`
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  margin-right: 1rem;
+`;
+
+const ProfileBasic = styled.div`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: rgb(226 232 240);
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LoginButton = styled.button`
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(17 24 39);
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(229 231 235);
+  &:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  &:hover {
+    background-color: rgb(243 244 246);
+    color: rgb(29 78 216);
+  }
+`;
+
+const TitleWrapper = styled.div`
+  margin-top: 3.5rem;
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+`;
+
+const TitleDesc = styled.p`
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+`;
+
+const RegionUl = styled.ul`
+  margin: 2.5rem 0;
+  display: flex;
+  white-space: nowrap;
+  overflow: auto;
+`;
+
+const RegionButton = styled.button`
+  margin-right: 1rem;
+`;
+
+const RegionItemLi = styled.li`
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+`;
+
+const MarketTitle = styled.div`
+  font-weight: 500;
+  margin-bottom: 1.75rem;
+`;
+
+const MarketListWrapper = styled.div`
+  margin-bottom: 7rem;
+`;

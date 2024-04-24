@@ -4,6 +4,7 @@ import { marketListItemProps } from "../../../types/MarketList";
 import MarketListItem from "../../../components/Market/MarketListItem";
 import { RiErrorWarningFill } from "react-icons/ri";
 import Skeleton from "../../../components/common/Skeleton";
+import styled from "@emotion/styled";
 
 const SearchResultPage = () => {
   const [searchParams] = useSearchParams();
@@ -19,6 +20,7 @@ const SearchResultPage = () => {
         </div>
       </>
     );
+
   return (
     <>
       <div className="mt-4">
@@ -33,16 +35,16 @@ const SearchResultPage = () => {
             )
           )
         ) : (
-          <div className="border p-5 rounded-2xl mb-4">
-            <p className="flex justify-center">
+          <Container>
+            <IconWrapper>
               <RiErrorWarningFill size={40} color="#e6e6e6" />
-            </p>
-            <p className="text-center mt-4">시장 정보가 존재하지 않습니다😭</p>
-            <div className="text-center text-sm mt-4 text-slate-300">
+            </IconWrapper>
+            <Text>시장 정보가 존재하지 않습니다😭</Text>
+            <SubTextWrapper>
               <p>시장의 풀네임을 입력해주세요</p>
               <p>ex. 구매탄 (x) 구매탄시장 (o)</p>
-            </div>
-          </div>
+            </SubTextWrapper>
+          </Container>
         )}
       </div>
     </>
@@ -50,3 +52,28 @@ const SearchResultPage = () => {
 };
 
 export default SearchResultPage;
+
+const Container = styled.div`
+  border-width: 1px;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const IconWrapper = styled.p`
+  display: flex;
+  justify-content: center;
+`;
+
+const Text = styled.p`
+  text-align: center;
+  margin-top: 1rem;
+`;
+
+const SubTextWrapper = styled.div`
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 1rem;
+  color: rgb(203 213 225);
+`;

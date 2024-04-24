@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Nav from "../../components/common/Nav";
 import TopTitle from "../../components/common/TopTitle";
 import { Link, useLocation, useParams } from "react-router-dom";
+import styled from "@emotion/styled";
 
 declare global {
   interface Window {
@@ -50,49 +51,86 @@ const ParkingLotDetailPage = () => {
   return (
     <>
       <TopTitle text={`${prkplceNm}`} bg="bg-theme-color" />
-      <div className="mt-24 mb-28">
-        <div id="map" className="w-full h-40 rounded-b-2xl"></div>
-        <div className="my-3 text-center">
+      <Container>
+        <Map id="map"></Map>
+        <ReviewBtnWrapper>
           <Link to={`/${prkplceNo}/${prkplceNm}/review`}>
-            <button className="bg-theme-color text-white p-3 rounded-xl ">
-              주차장 리뷰 보러가기 🚘
-            </button>
+            <ReviewBtn>주차장 리뷰 보러가기 🚘</ReviewBtn>
           </Link>
-        </div>
-        <div className="mx-4 mt-4">
+        </ReviewBtnWrapper>
+        <InfoWrapper>
           <div>
-            <div className="font-semibold text-2xl">주소</div>
-            <div className="font-medium text-sm">{prkplceRoadNmAddr}</div>
+            <InfoTitle>주소</InfoTitle>
+            <InfoText>{prkplceRoadNmAddr}</InfoText>
           </div>
           <div className="mt-4">
-            <div className="font-semibold text-2xl">주차구획수</div>
-            <div className="font-medium text-sm">{prkplceCnt}</div>
+            <InfoTitle>주차구획수</InfoTitle>
+            <InfoText>{prkplceCnt}</InfoText>
           </div>
           <div className="mt-4">
-            <div className="font-semibold text-2xl">운영정보</div>
-            <div className="font-medium text-sm">
+            <InfoTitle>운영정보</InfoTitle>
+            <InfoText>
               <div>
                 {prkplceOperInfo.split("\n").map((item: string) => (
                   <p key={item}>{item}</p>
                 ))}
               </div>
-            </div>
+            </InfoText>
           </div>
           <div className="mt-4">
-            <div className="font-semibold text-2xl">요금정보</div>
-            <div className="font-medium text-sm">
+            <InfoTitle>요금정보</InfoTitle>
+            <InfoText>
               <div>
                 {prkplceChargeInfo.split("\n").map((item: string) => (
                   <p key={item}>{item}</p>
                 ))}
               </div>
-            </div>
+            </InfoText>
           </div>
-        </div>
-      </div>
+        </InfoWrapper>
+      </Container>
       <Nav />
     </>
   );
 };
 
 export default ParkingLotDetailPage;
+
+const Container = styled.div`
+  margin: 6rem 0 7rem;
+`;
+
+const Map = styled.div`
+  width: 100%;
+  height: 10rem;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+`;
+
+const ReviewBtnWrapper = styled.div`
+  margin: 0.75rem 0;
+  text-align: center;
+`;
+
+const ReviewBtn = styled.button`
+  background-color: rgb(24 37 61);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+`;
+
+const InfoWrapper = styled.div`
+  margin: 1rem 1rem 0;
+`;
+
+const InfoTitle = styled.div`
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 2rem;
+`;
+
+const InfoText = styled.div`
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+`;
