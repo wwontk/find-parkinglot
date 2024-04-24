@@ -1,38 +1,23 @@
 import { useNavigate, useParams } from "react-router-dom";
 import TopTitle from "../../components/common/TopTitle";
-import {
-  DocumentData,
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
-import { db } from "../../firebase";
-import { useEffect, useState } from "react";
+// import {
+//   DocumentData,
+//   collection,
+//   onSnapshot,
+//   query,
+//   where,
+// } from "firebase/firestore";
+// import { db } from "../../firebase";
+// import { useEffect, useState } from "react";
 import ReviewListItem from "../../components/ReviewListItem";
+import useGetReviewListQuery from "../../hooks/query/useGetReviewListQuery";
 
 const ParkingLotReviewPage = () => {
   const navigate = useNavigate();
 
   const { prkplceNo, prkplceNm } = useParams();
 
-  const [review, setReview] = useState<{ id: string; data: DocumentData }[]>(
-    []
-  );
-
-  useEffect(() => {
-    const q = query(
-      collection(db, "Reviews"),
-      where("prkplceNo", "==", prkplceNo)
-    );
-    onSnapshot(q, (querySnapshot) => {
-      const newArray = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        data: doc.data(),
-      }));
-      setReview(newArray);
-    });
-  }, [prkplceNo]);
+  const { reviewListData } = useGetReviewListQuery(prkplceNo!);
 
   return (
     <>
@@ -46,8 +31,8 @@ const ParkingLotReviewPage = () => {
         </button>
       </div>
       <div className="mt-4 mb-4 flex flex-col gap-2">
-        {review.length > 0 ? (
-          review.map((item, index) => (
+        {reviewListData ? (
+          reviewListData.map((item, index) => (
             <ReviewListItem
               key={index}
               nickname={item.data.nickname}

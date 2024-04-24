@@ -1,43 +1,21 @@
-import { useEffect, useState } from "react";
 import TopTitle from "../../../components/common/TopTitle";
-import {
-  DocumentData,
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
-import { db } from "../../../firebase";
 import useUserState from "../../../hooks/userUserState";
 import ReviewListItem from "../../../components/ReviewListItem";
+import useGetMyReviewListQuery from "../../../hooks/query/useGetMyReviewListQuery";
 
 const MyReviewPage = () => {
   const { userState } = useUserState();
-  const [myReview, setMyReview] = useState<
-    { id: string; data: DocumentData }[]
-  >([]);
+  const useruid = userState.uid;
 
-  useEffect(() => {
-    const q = query(
-      collection(db, "Reviews"),
-      where("useruid", "==", userState.uid)
-    );
-    onSnapshot(q, (querySnapshot) => {
-      const newArray = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        data: doc.data(),
-      }));
-      setMyReview(newArray);
-    });
-  }, [userState.uid]);
+  const { myReviewListData } = useGetMyReviewListQuery(useruid);
 
   return (
     <>
       <TopTitle text="내가 쓴 리뷰" />
       <div className="mt-24">
         <div className="mt-4 mb-4 flex flex-col gap-2">
-          {myReview.length > 0 ? (
-            myReview.map((item, index) => (
+          {myReviewListData ? (
+            myReviewListData.map((item, index) => (
               <ReviewListItem
                 key={index}
                 nickname={item.data.nickname}
