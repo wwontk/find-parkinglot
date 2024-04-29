@@ -4,12 +4,12 @@ import TopTitle from "../../../components/common/TopTitle";
 import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase";
-import useUserState from "../../../hooks/userUserState";
 import styled from "@emotion/styled";
+import useUserStore from "../../../stores/useUserStore";
 
 const PostReviewPage = () => {
   const { prkplceNo, prkplceNm } = useParams();
-  const { userState } = useUserState();
+  const { userInfo } = useUserStore();
 
   const navigate = useNavigate();
 
@@ -19,10 +19,10 @@ const PostReviewPage = () => {
   const [check, setCheck] = useState(false);
 
   useEffect(() => {
-    if (!userState.isLogin) {
+    if (!userInfo.isLogin) {
       navigate("/login", { replace: true });
     }
-  }, [navigate, userState.isLogin]);
+  }, [navigate, userInfo.isLogin]);
 
   const handleChangeStar = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStar(e.target.value);
@@ -42,9 +42,9 @@ const PostReviewPage = () => {
       prkplceNo: prkplceNo,
       prkplceNm: prkplceNm,
       score: star,
-      useruid: userState.uid,
-      nickname: userState.nickname,
-      profileImg: userState.profileImg,
+      useruid: userInfo.uid,
+      nickname: userInfo.nickname,
+      profileImg: userInfo.profileImg,
       text: reviewText,
     });
     alert("리뷰가 등록되었습니다.");
@@ -73,7 +73,7 @@ const PostReviewPage = () => {
             <option value="5">5</option>
           </Select>
           <DescText>리뷰</DescText>
-          <TextArea value={reviewText} onChange={handleChangeReviewText} />
+          <TextArea value={`${reviewText}`} onChange={handleChangeReviewText} />
           <PostBtn disabled={!check}>등록</PostBtn>
         </Container>
       </Form>

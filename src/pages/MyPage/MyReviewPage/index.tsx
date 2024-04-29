@@ -1,14 +1,14 @@
 import TopTitle from "../../../components/common/TopTitle";
-import useUserState from "../../../hooks/userUserState";
 import ReviewListItem from "../../../components/ReviewListItem";
 import useGetMyReviewListQuery from "../../../hooks/query/useGetMyReviewListQuery";
 import styled from "@emotion/styled";
+import useUserStore from "../../../stores/useUserStore";
 
 const MyReviewPage = () => {
-  const { userState } = useUserState();
-  const useruid = userState.uid;
+  const { userInfo } = useUserStore();
+  const useruid = userInfo.uid;
 
-  const { myReviewListData } = useGetMyReviewListQuery(useruid);
+  const { myReviewListData } = useGetMyReviewListQuery(`${useruid}`);
 
   return (
     <>

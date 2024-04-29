@@ -3,12 +3,11 @@ import useInput from "../../hooks/useInput";
 import { FormEvent, useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
-import useUserState from "../../hooks/userUserState";
 import styled from "@emotion/styled";
+import useUserStore from "../../stores/useUserStore";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { updateUser } = useUserState();
 
   const [email, , handleChangeEmail] = useInput("");
   const [password, , handleChangePassword] = useInput("");
@@ -16,6 +15,8 @@ const LoginPage = () => {
   const [allCheck, setAllCheck] = useState(false);
 
   const [loginError, setLoginError] = useState(false);
+
+  const { setUserInfo } = useUserStore();
 
   useEffect(() => {
     if (email && password) {
@@ -28,10 +29,10 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, String(email), String(password));
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          updateUser({
+          setUserInfo({
             uid: user.uid,
             email: user.email,
             nickname: user.displayName,
@@ -55,13 +56,13 @@ const LoginPage = () => {
         <LoginInput
           type="email"
           placeholder="email"
-          value={email}
+          value={`${email}`}
           onChange={handleChangeEmail}
         ></LoginInput>
         <LoginInput
           type="password"
           placeholder="password"
-          value={password}
+          value={`${password}`}
           onChange={handleChangePassword}
         ></LoginInput>
         {loginError && (

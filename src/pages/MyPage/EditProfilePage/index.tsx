@@ -1,7 +1,6 @@
 import { updateProfile } from "firebase/auth";
 import TopTitle from "../../../components/common/TopTitle";
 import useInput from "../../../hooks/useInput";
-import useUserState from "../../../hooks/userUserState";
 import { IoPerson } from "react-icons/io5";
 import { MdPhotoCamera } from "react-icons/md";
 import { auth, db, storage } from "../../../firebase";
@@ -17,14 +16,15 @@ import {
   where,
 } from "firebase/firestore";
 import styled from "@emotion/styled";
+import useUserStore from "../../../stores/useUserStore";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
-  const { userState, updateUser } = useUserState();
+  const { userInfo, setUserInfo } = useUserStore();
 
-  const [nickname, , handleNicknameChange] = useInput(userState.nickname);
+  const [nickname, , handleNicknameChange] = useInput(userInfo.nickname);
   const [profileUrl, setProfilUrl] = useState<string | ArrayBuffer | null>(
-    userState.profileImg
+    userInfo.profileImg
   );
 
   const [myReview, setMyReview] = useState<string[]>([]);
@@ -32,13 +32,13 @@ const EditProfilePage = () => {
   useEffect(() => {
     const q = query(
       collection(db, "Reviews"),
-      where("useruid", "==", userState.uid)
+      where("useruid", "==", userInfo.uid)
     );
     onSnapshot(q, (querySnapshot) => {
       const newArray = querySnapshot.docs.map((doc) => doc.id);
       setMyReview(newArray);
     });
-  }, [userState.uid]);
+  }, [userInfo.uid]);
 
   const handleEditProfile = async () => {
     if (!auth.currentUser) return;
@@ -46,8 +46,8 @@ const EditProfilePage = () => {
       displayName: nickname,
       photoURL: String(profileUrl),
     });
-    updateUser({
-      ...userState,
+    setUserInfo({
+      ...userInfo,
       nickname: nickname,
       profileImg: profileUrl,
     });
@@ -105,7 +105,7 @@ const EditProfilePage = () => {
           <p className="font-semibold">Nickname</p>
           <NicknameInput
             type="text"
-            value={nickname}
+            value={`${nickname}`}
             onChange={handleNicknameChange}
           />
         </div>

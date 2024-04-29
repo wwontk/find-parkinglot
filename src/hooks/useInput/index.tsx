@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
 const useInput = (
-  init: string
+  init: string | null
 ): [
-  string,
-  Dispatch<SetStateAction<string>>,
+  string | null,
+  Dispatch<SetStateAction<string | null>>,
   (
     e:
       | React.ChangeEvent<HTMLInputElement>

@@ -2,16 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Nav from "../../components/common/Nav";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import useUserState from "../../hooks/userUserState";
 import { useEffect } from "react";
 import { IoPerson } from "react-icons/io5";
 import { MdOutlineRateReview } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import styled from "@emotion/styled";
+import useUserStore from "../../stores/useUserStore";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { userState, resetUser } = useUserState();
+  const { userInfo, deleteUserInfo } = useUserStore();
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -23,7 +23,7 @@ const MyPage = () => {
   const handleLogoutButton = async () => {
     try {
       await signOut(auth).then(() => {
-        resetUser();
+        deleteUserInfo();
         alert("로그아웃 하였습니다.");
         navigate("/");
       });
@@ -36,16 +36,16 @@ const MyPage = () => {
     <>
       <HeaderTitle>profile</HeaderTitle>
       <Container>
-        {userState.profileImg ? (
+        {userInfo.profileImg ? (
           <>
-            <ProfileImg src={userState.profileImg} alt="프로필이미지" />
+            <ProfileImg src={`${userInfo.profileImg}`} alt="프로필이미지" />
           </>
         ) : (
           <ProfileBasic>
             <IoPerson size={70} color="white" />
           </ProfileBasic>
         )}
-        <NicknameText>{userState.nickname}</NicknameText>
+        <NicknameText>{userInfo.nickname}</NicknameText>
         <div>
           <Link to={"/editprofile"}>
             <MypageNavWrapper>

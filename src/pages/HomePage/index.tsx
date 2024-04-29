@@ -5,9 +5,9 @@ import regionList from "../../data/RegionList";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
-import useUserState from "../../hooks/userUserState";
 import { IoPerson } from "react-icons/io5";
 import styled from "@emotion/styled";
+import useUserStore from "../../stores/useUserStore";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -15,12 +15,12 @@ const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nickname, setNickname] = useState<string | null>("");
 
-  const { userState, updateUser } = useUserState();
+  const { userInfo, setUserInfo } = useUserStore();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        updateUser({
+        setUserInfo({
           uid: user.uid,
           email: user.email,
           nickname: user.displayName,
@@ -42,10 +42,10 @@ const HomePage = () => {
       <HomeTopBar className="max-w-default">
         {isLoggedIn ? (
           <>
-            {userState.profileImg ? (
+            {userInfo.profileImg ? (
               <ProfileImg
                 className="ring-2 ring-white"
-                src={`${userState.profileImg}`}
+                src={`${userInfo.profileImg}`}
               ></ProfileImg>
             ) : (
               <ProfileBasic className="ring-2 ring-white">

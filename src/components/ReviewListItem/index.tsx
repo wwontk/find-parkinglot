@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { ReviewDataProps } from "../../types/Review";
-import useUserState from "../../hooks/userUserState";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import useUserStore from "../../stores/useUserStore";
 
 const ReviewListItem = (props: ReviewDataProps) => {
-  const { userState } = useUserState();
+  const { userInfo } = useUserStore();
   const repeatCnt = parseInt(props.score);
 
   const handleDeleteReview = async () => {
@@ -26,7 +26,7 @@ const ReviewListItem = (props: ReviewDataProps) => {
             alt="profile"
           />
           <p className="text-sm flex-1">{props.nickname}</p>
-          {props.useruid === userState.uid && (
+          {props.useruid === userInfo.uid && (
             <>
               <Link to={`/${props.reviewId}/update`}>
                 <button className="text-sm bg-theme-color text-white p-1 rounded">
