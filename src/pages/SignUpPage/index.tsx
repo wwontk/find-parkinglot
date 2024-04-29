@@ -16,6 +16,9 @@ const SignUpPage = () => {
 
   const [allCheck, setAllCheck] = useState(false);
 
+  const [isSignupError, setIsSignupError] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
   const CheckInit = {
     status: false,
     msg: "",
@@ -92,7 +95,11 @@ const SignUpPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(
+        auth,
+        String(email),
+        String(password)
+      );
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           displayName: nickname,
@@ -102,7 +109,8 @@ const SignUpPage = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      setIsSignupError(true);
+      setErrMsg("이미 존재하는 이메일 입니다.");
     }
   };
 
@@ -117,7 +125,7 @@ const SignUpPage = () => {
           <Input
             type="email"
             placeholder="email"
-            value={email}
+            value={`${email}`}
             onChange={handleChangeEmail}
           ></Input>
           <p
@@ -132,7 +140,7 @@ const SignUpPage = () => {
           <Input
             type="password"
             placeholder="password"
-            value={password}
+            value={`${password}`}
             onChange={handleChangePassword}
           ></Input>
           <p
@@ -153,7 +161,7 @@ const SignUpPage = () => {
           <Input
             type="password"
             placeholder="passwordCheck"
-            value={passwordCheck}
+            value={`${passwordCheck}`}
             onChange={handleChangePasswordCheck}
           ></Input>
           <p
@@ -168,10 +176,11 @@ const SignUpPage = () => {
           <Input
             type="text"
             placeholder="nickname"
-            value={nickname}
+            value={`${nickname}`}
             onChange={handleChangeNickname}
           ></Input>
         </div>
+        {isSignupError ? <ErrMsg>{errMsg}</ErrMsg> : ""}
         <SignupBtn disabled={!allCheck}>sign up</SignupBtn>
       </Form>
       <div className="mt-2 text-sm text-center">
@@ -204,6 +213,10 @@ const Input = styled.input`
   width: 18rem;
   padding: 0.5rem;
   border-radius: 1rem;
+`;
+
+const ErrMsg = styled.p`
+  color: rgb(220 38 38);
 `;
 
 const SignupBtn = styled.button`
