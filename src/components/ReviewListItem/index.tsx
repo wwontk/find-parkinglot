@@ -3,6 +3,7 @@ import { ReviewDataProps } from "../../types/Review";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import useUserStore from "../../stores/useUserStore";
+import { IoPerson } from "react-icons/io5";
 
 const ReviewListItem = (props: ReviewDataProps) => {
   const { userInfo } = useUserStore();
@@ -20,11 +21,20 @@ const ReviewListItem = (props: ReviewDataProps) => {
     <>
       <div className="border rounded-xl p-3 flex flex-col gap-2">
         <div className="flex items-center gap-2">
-          <img
-            className="w-7 h-7 rounded-full object-cover"
-            src={props.profileImg}
-            alt="profile"
-          />
+          {props.profileImg ? (
+            <img
+              className="w-7 h-7 rounded-full object-cover"
+              src={props.profileImg}
+              alt="profile"
+            />
+          ) : (
+            <>
+              <div className="w-7 h-7 rounded-full bg-gray-200 flex justify-center items-center">
+                <IoPerson size={15} color="white" />
+              </div>
+            </>
+          )}
+
           <p className="text-sm flex-1">{props.nickname}</p>
           {props.useruid === userInfo.uid && (
             <>
