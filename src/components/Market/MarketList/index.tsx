@@ -12,7 +12,7 @@ const MarketList = () => {
     marketListData,
     marketListFetchNextPage,
     marketListHasNextPage,
-    marketListIsFetching,
+    marketListIsLoading,
   } = useGetMarketListQuery();
 
   const { bottomDiv } = useInfiniteScroll(
@@ -20,7 +20,7 @@ const MarketList = () => {
     marketListHasNextPage
   );
 
-  if (marketListIsFetching)
+  if (marketListIsLoading)
     return (
       <>
         <Skeleton cnt={10} />

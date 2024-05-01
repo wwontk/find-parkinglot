@@ -12,7 +12,7 @@ const ParkingLotList = () => {
     parkingLotData,
     parkingLotFecthNextPage,
     parkingLotHasNextPage,
-    parkingLotIsFetching,
+    parkingLotIsLoading,
   } = useGetParkingLotQuery(marketname);
 
   const { bottomDiv } = useInfiniteScroll(
@@ -20,7 +20,7 @@ const ParkingLotList = () => {
     parkingLotHasNextPage
   );
 
-  if (parkingLotIsFetching)
+  if (parkingLotIsLoading)
     return (
       <>
         <Skeleton cnt={10} />

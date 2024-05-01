@@ -19,7 +19,7 @@ const useGetMarketListQuery = () => {
     data: marketListData,
     fetchNextPage: marketListFetchNextPage,
     hasNextPage: marketListHasNextPage,
-    isFetching: marketListIsFetching,
+    isLoading: marketListIsLoading,
   } = useInfiniteQuery({
     queryKey: ["marketList"],
     initialPageParam: 1,
@@ -31,12 +31,13 @@ const useGetMarketListQuery = () => {
         ? parseInt(lastPage.response.body.pageNo) + 1
         : null;
     },
+    staleTime: Infinity,
   });
   return {
     marketListData,
     marketListFetchNextPage,
     marketListHasNextPage,
-    marketListIsFetching,
+    marketListIsLoading,
   };
 };
 
