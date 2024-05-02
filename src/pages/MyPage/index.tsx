@@ -19,7 +19,7 @@ const MyPage = () => {
     if (!auth.currentUser) {
       navigate("/login", { replace: true });
     }
-  }, [navigate, userInfo.isLogin]);
+  }, [navigate]);
 
   const handleLogoutButton = async () => {
     try {

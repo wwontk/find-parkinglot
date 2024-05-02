@@ -3,18 +3,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchAPI = async (props: getParkingLotProps) => {
-  const res = await axios.get(
-    "http://api.kcisa.kr/openapi/API_CNV_064/request",
-    {
-      params: {
-        serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
-        numOfRows: 10,
-        pageNo: props.page,
-        mktNm: props.mktNm,
-        dist: 1,
-      },
-    }
-  );
+  const res = await axios.get("/openapi/API_CNV_064/request", {
+    params: {
+      serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
+      numOfRows: 10,
+      pageNo: props.page,
+      mktNm: props.mktNm,
+      dist: 1,
+    },
+  });
 
   return res.data;
 };
