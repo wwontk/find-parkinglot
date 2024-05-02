@@ -14,11 +14,10 @@ const MyPage = () => {
   const { userInfo, deleteUserInfo } = useUserStore();
 
   useEffect(() => {
-    const user = auth.currentUser;
-    if (!user) {
+    if (!userInfo.isLogin) {
       navigate("/login", { replace: true });
     }
-  }, [navigate]);
+  }, [navigate, userInfo.isLogin]);
 
   const handleLogoutButton = async () => {
     try {
