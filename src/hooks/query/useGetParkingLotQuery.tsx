@@ -1,9 +1,9 @@
 import { getParkingLotProps } from "../../types/ParkingLot";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { axiosParking } from "../../apis";
 
 const fetchAPI = async (props: getParkingLotProps) => {
-  const res = await axios.get("/openapi/API_CNV_064/request", {
+  const res = await axiosParking.get("/openapi/API_CNV_064/request", {
     params: {
       serviceKey: import.meta.env.VITE_PARKING_SERVICE_KEY,
       numOfRows: 10,
