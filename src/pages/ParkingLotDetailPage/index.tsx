@@ -57,6 +57,11 @@ const ParkingLotDetailPage = () => {
           <Link to={`/${prkplceNo}/${prkplceNm}/review`}>
             <ReviewBtn>주차장 리뷰 보러가기 🚘</ReviewBtn>
           </Link>
+          <Link
+            to={`https://map.kakao.com/link/to/${prkplceNm},${prkplceLatPos},${prkplceLotPos}`}
+          >
+            <ReviewBtn className="ml-4">길찾기 🚘</ReviewBtn>
+          </Link>
         </ReviewBtnWrapper>
         <InfoWrapper>
           <div>
