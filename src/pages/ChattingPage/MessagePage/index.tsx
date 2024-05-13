@@ -130,7 +130,7 @@ const MessagePage = () => {
         >
           <input
             type="text"
-            value={content}
+            value={content && content}
             className="flex-1 bg-slate-200 p-2 rounded"
             placeholder="메세지를 입력하세요"
             onChange={handleChangeContent}
