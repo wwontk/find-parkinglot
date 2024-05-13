@@ -13,8 +13,6 @@ const MyPage = () => {
   const navigate = useNavigate();
   const { userInfo, deleteUserInfo } = useUserStore();
 
-  console.log(userInfo);
-
   useEffect(() => {
     if (!auth.currentUser) {
       navigate("/login", { replace: true });

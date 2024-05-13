@@ -2,9 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import { FormEvent, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, database } from "../../firebase";
 import { ValidCheckType } from "../../types/User";
 import styled from "@emotion/styled";
+import { ref, set } from "firebase/database";
+import md5 from "md5";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -95,7 +97,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(
+      const createdUser = await createUserWithEmailAndPassword(
         auth,
         String(email),
         String(password)
@@ -103,14 +105,20 @@ const SignUpPage = () => {
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           displayName: nickname,
-        }).then(() => {
-          alert("회원가입이 완료되었습니다.");
-          navigate("/");
+          photoURL: `http://gravatar.com/avatar/${md5(
+            String(createdUser.user.email)
+          )}?d=identicon`,
         });
       }
+      set(ref(database, `users/${createdUser.user.uid}`), {
+        name: createdUser.user.displayName,
+        image: createdUser.user.photoURL,
+      });
     } catch (error) {
       setIsSignupError(true);
       setErrMsg("이미 존재하는 이메일 입니다.");
+    } finally {
+      navigate("/", { replace: true });
     }
   };
 

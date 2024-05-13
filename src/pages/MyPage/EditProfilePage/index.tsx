@@ -3,10 +3,10 @@ import TopTitle from "../../../components/common/TopTitle";
 import useInput from "../../../hooks/useInput";
 import { IoPerson } from "react-icons/io5";
 import { MdPhotoCamera } from "react-icons/md";
-import { auth, db, storage } from "../../../firebase";
+import { auth, database, db, storage } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, uploadBytes, ref as strRef } from "firebase/storage";
 import {
   collection,
   doc,
@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import styled from "@emotion/styled";
 import useUserStore from "../../../stores/useUserStore";
+import { update, ref } from "firebase/database";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -51,6 +52,9 @@ const EditProfilePage = () => {
       nickname: nickname,
       profileImg: profileUrl,
     });
+    update(ref(database, `users/${auth.currentUser.uid}`), {
+      image: profileUrl,
+    });
     for (let i = 0; i < myReview.length; i++) {
       const ref = doc(db, "Reviews", myReview[i]);
       await updateDoc(ref, {
@@ -67,7 +71,10 @@ const EditProfilePage = () => {
 
     if (!file) return;
 
-    const imageRef = ref(storage, `images/${file.name}+${file.lastModified}`);
+    const imageRef = strRef(
+      storage,
+      `images/${file.name}+${file.lastModified}`
+    );
     uploadBytes(imageRef, file).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setProfilUrl(url);
