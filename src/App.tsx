@@ -16,6 +16,8 @@ import MyReviewPage from "./pages/MyPage/MyReviewPage";
 import ParkingLotReviewPage from "./pages/ParkingLotReviewPage";
 import PostReviewPage from "./pages/ParkingLotReviewPage/PostReviewPage";
 import ReviewUpdatePage from "./pages/ReviewUpdatePage";
+import ChattingPage from "./pages/ChattingPage";
+import MessagePage from "./pages/ChattingPage/MessagePage";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
               path="/:prkplceNo/:prkplceNm/review/post"
               element={<PostReviewPage />}
             />
+            <Route path="/chat" element={<ChattingPage />} />
+            <Route path="/chat/:chatroomid" element={<MessagePage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/editprofile" element={<EditProfilePage />} />
             <Route path="/myreview" element={<MyReviewPage />} />
