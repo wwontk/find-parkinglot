@@ -11,7 +11,7 @@ const fetchAPI = async (props: getParkingLotProps) => {
         numOfRows: 10,
         pageNo: props.page,
         mktNm: props.mktNm,
-        dist: 1,
+        dist: 50,
       },
     }
   );
