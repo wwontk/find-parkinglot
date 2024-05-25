@@ -39,7 +39,7 @@ const HomePage = () => {
 
   return (
     <>
-      <HomeTopBar className="max-w-default">
+      <HomeTopBar>
         {isLoggedIn ? (
           <>
             {userInfo.profileImg ? (
@@ -115,6 +115,10 @@ const HomeTopBar = styled.div`
   margin: 0 auto;
   background-color: white;
   z-index: 20;
+  max-width: 24rem;
+  @media (min-width: 800px) {
+    max-width: 50rem;
+  }
 `;
 
 const ProfileImg = styled.img`

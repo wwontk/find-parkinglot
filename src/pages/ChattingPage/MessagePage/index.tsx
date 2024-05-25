@@ -14,6 +14,7 @@ import {
 import { database } from "../../../firebase";
 import useUserStore from "../../../stores/useUserStore";
 import Message from "../../../components/Chatting/Message";
+import styled from "@emotion/styled";
 
 interface MessageObjectType {
   timestamp: number;
@@ -109,18 +110,18 @@ const MessagePage = () => {
 
   return (
     <>
-      <div
-        className={`flex justify-center font-bold text-2xl items-center max-w-default w-full m-auto h-20 fixed top-0 left-0 right-0 z-10 bg-white
+      <Container
+        className={`flex justify-center font-bold text-2xl items-center w-full m-auto h-20 fixed top-0 left-0 right-0 z-10 bg-white
         `}
       >
         {chatroomInfo.name}
-      </div>
+      </Container>
       <div className="mt-20 mb-16">
         {renderMessages(messages)}
         <div ref={messageEndRef}></div>
       </div>
-      <div
-        className={`flex max-w-default w-full m-auto h-16 fixed bottom-0 left-0 right-0  z-10
+      <Container
+        className={`flex w-full m-auto h-16 fixed bottom-0 left-0 right-0  z-10
          bg-white drop-shadow-md p-2 gap-2
         `}
       >
@@ -142,9 +143,16 @@ const MessagePage = () => {
             <IoIosSend />
           </button>
         </form>
-      </div>
+      </Container>
     </>
   );
 };
 
 export default MessagePage;
+
+const Container = styled.div`
+  max-width: 24rem;
+  @media (min-width: 800px) {
+    max-width: 50rem;
+  }
+`;

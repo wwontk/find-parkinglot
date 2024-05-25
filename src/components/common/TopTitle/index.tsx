@@ -1,5 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
 
 interface TopTitleProps {
   text: string;
@@ -13,8 +14,8 @@ const TopTitle = (props: TopTitleProps) => {
   };
   return (
     <>
-      <div
-        className={`flex items-center max-w-default w-full m-auto h-24 fixed top-0 left-0 right-0 z-10 ${
+      <Container
+        className={`flex items-center w-full m-auto h-24 fixed top-0 left-0 right-0 z-10 ${
           props.bg ? props.bg : "bg-white"
         }`}
       >
@@ -33,9 +34,16 @@ const TopTitle = (props: TopTitleProps) => {
         >
           {props.text}
         </div>
-      </div>
+      </Container>
     </>
   );
 };
 
 export default TopTitle;
+
+const Container = styled.div`
+  max-width: 24rem;
+  @media (min-width: 800px) {
+    max-width: 50rem;
+  }
+`;

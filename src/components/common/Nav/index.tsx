@@ -3,6 +3,7 @@ import { IoSearchSharp } from "react-icons/io5";
 import { BsPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { IoChatbubbleEllipses } from "react-icons/io5";
+import styled from "@emotion/styled";
 
 const navItem = [
   { id: 1, path: "/", icon: <TiHome size={25} /> },
@@ -21,7 +22,7 @@ const navItem = [
 
 const Nav = () => {
   return (
-    <nav className="flex justify-around items-center max-w-default w-full m-auto h-24 rounded-t-2xl fixed bottom-0 left-0 right-0 bg-theme-color">
+    <NavConatiner>
       {navItem.map((nav) => (
         <NavLink
           key={nav.id}
@@ -33,8 +34,28 @@ const Nav = () => {
           {nav.icon}
         </NavLink>
       ))}
-    </nav>
+    </NavConatiner>
   );
 };
 
 export default Nav;
+
+const NavConatiner = styled.nav`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  height: 6rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgb(24 37 61);
+  max-width: 24rem;
+  @media (min-width: 800px) {
+    max-width: 50rem;
+  }
+`;
