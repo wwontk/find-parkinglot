@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Nav from "../../components/common/Nav";
 import { onChildAdded, ref } from "firebase/database";
-import { database } from "../../firebase";
+import { auth, database } from "../../firebase";
 import { useEffect, useState } from "react";
 import useUserStore from "../../stores/useUserStore";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,12 @@ const ChattingPage = () => {
       addUsersListener(userInfo.uid);
     }
   }, [userInfo?.uid]);
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   const addUsersListener = (currentUserId: string) => {
     const usersArray: Array<UserObjectType> = [];
@@ -85,7 +91,7 @@ const ChattingPage = () => {
   return (
     <>
       <ChattingHeader>
-        <HeaderTitle>채팅방 목록</HeaderTitle>
+        <HeaderTitle>친구 목록</HeaderTitle>
       </ChattingHeader>
       <ChattingList>{renderUsersList(users)}</ChattingList>
       <Nav />
